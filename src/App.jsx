@@ -19,7 +19,7 @@ export default function App() {
   }
 
   function toggleTodo(id, completed) {
-    setTodos((currentTodos) => 
+    setTodos((currentTodos) =>
       currentTodos.map((todo) => {
         if (todo.id === id) {
           return { ...todo, completed };
@@ -27,6 +27,12 @@ export default function App() {
         return todo;
       })
     );
+  }
+
+  function deleteTodo(id) {
+    setTodos((currentTodos) => {
+      return currentTodos.filter((todo) => todo.id !== id);
+    });
   }
 
   return (
@@ -51,11 +57,16 @@ export default function App() {
               <input
                 type="checkbox"
                 checked={todo.completed}
-                onChange={(event) => toggleTodo(todo.id, event.target.checked)} 
+                onChange={(event) => toggleTodo(todo.id, event.target.checked)}
               />
               {todo.title}
             </label>
-            <button className="btn btn-danger">Delete</button>
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
