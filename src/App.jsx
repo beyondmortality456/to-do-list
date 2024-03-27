@@ -15,7 +15,18 @@ export default function App() {
       ];
     });
 
-    setNewItem("")
+    setNewItem("");
+  }
+
+  function toggleTodo(id, completed) {
+    setTodos((currentTodos) => 
+      currentTodos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed };
+        }
+        return todo;
+      })
+    );
   }
 
   return (
@@ -34,17 +45,19 @@ export default function App() {
       </form>
       <h1 className="header">Todo List</h1>
       <ul className="list">
-        {todos.map((todo) => {
-          return (
-            <li key={todo.id}>
-              <label>
-                <input type="checkbox" checked={todo.completed} />
-                {todo.title}
-              </label>
-              <button className="btn btn-danger">Delete</button>
-            </li>
-          );
-        })}
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <label>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={(event) => toggleTodo(todo.id, event.target.checked)} 
+              />
+              {todo.title}
+            </label>
+            <button className="btn btn-danger">Delete</button>
+          </li>
+        ))}
       </ul>
     </>
   );
